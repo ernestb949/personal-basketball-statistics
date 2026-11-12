@@ -1,6 +1,7 @@
 from drafter import *
 from dataclasses import dataclass
 
+
 set_website_title("Basketball Statistics Tracker")
 
 set_site_information(
@@ -45,7 +46,7 @@ def index(state: State) -> Page:
         "Welcome to your personal basketball statistics tracker!",
         "Record games, track your performance, and monitor your progress.",
         "<br>",
-        Link("Dashboard", "/dashboard"),
+        Link("Dashboard", "/player_dashboard"),
         "<br>",
         Link("Add a Game", "/add_game"),
         "<br>",
@@ -60,7 +61,7 @@ def index(state: State) -> Page:
 
 
 @route
-def dashboard(state: State) -> Page:
+def player_dashboard(state: State) -> Page:
     """Displays the player's total games, total points, and points per game."""
     total_points = 0
     total_games = 0
@@ -155,7 +156,7 @@ def save_game(state: State, opponent: str, date: str,
         Header("Game Saved!"),
         "Your basketball statistics have been recorded.",
         "<br>",
-        Link("Dashboard", "/dashboard"),
+        Link("Dashboard", "/player_dashboard"),
         "<br>",
         Link("Game History", "/history")
     ])
@@ -233,30 +234,40 @@ def averages(state: State) -> Page:
     total_points = 0
     total_rebounds = 0
     total_assists = 0
+    total_steals = 0
+    total_blocks = 0
     total_games = 0
 
     for game in state.games:
         total_points += game.points
         total_rebounds += game.rebounds
         total_assists += game.assists
+        total_steals += game.steals
+        total_blocks += game.blocks
         total_games += 1
 
     if total_games > 0:
         points_average = total_points / total_games
         rebounds_average = total_rebounds / total_games
         assists_average = total_assists / total_games
+        steals_average = total_steals / total_games
+        blocks_average = total_blocks / total_games
     else:
         points_average = 0
         rebounds_average = 0
         assists_average = 0
+        steals_average = 0
+        blocks_average = 0
 
     return Page(state, [
         Header("Basketball Statistics"),
         "Points Per Game: " + str(round(points_average, 2)),
         "Rebounds Per Game: " + str(round(rebounds_average, 2)),
         "Assists Per Game: " + str(round(assists_average, 2)),
+        "Steals Per Game: " + str(round(steals_average, 2)),
+        "Blocks Per Game: " + str(round(blocks_average, 2)),
         "<br>",
-        Link("Dashboard", "/dashboard"),
+        Link("Dashboard", "/player_dashboard"),
         "<br>",
         Link("Home", "/")
     ])
