@@ -1,7 +1,6 @@
 from drafter import *
 from dataclasses import dataclass
 
-
 set_website_title("Basketball Statistics Tracker")
 
 set_site_information(
@@ -18,7 +17,7 @@ set_website_framed(False)
 
 @dataclass
 class Game:
-    """Stores the information and statistics from one basketball game"""
+    """Stores the information and statistics from one basketball game."""
     opponent: str
     date: str
     points: int
@@ -30,7 +29,7 @@ class Game:
 
 @dataclass
 class State:
-    """Stores the information shared between the website's pages"""
+    """Stores the information shared between the website's pages."""
     games: list[Game]
     athlete_name: str
     points_goal: int
@@ -40,7 +39,7 @@ class State:
 
 @route
 def index(state: State) -> Page:
-    """Displays the home page with links to other sections"""
+    """Displays the home page with links to other sections."""
     return Page(state, [
         Header("Basketball Statistics Tracker"),
         "Welcome to your personal basketball statistics tracker!",
@@ -62,7 +61,7 @@ def index(state: State) -> Page:
 
 @route
 def dashboard(state: State) -> Page:
-    """Displays the player's total games, total points, and points per game"""
+    """Displays the player's total games, total points, and points per game."""
     total_points = 0
     total_games = 0
 
@@ -90,7 +89,7 @@ def dashboard(state: State) -> Page:
 
 @route
 def add_game(state: State) -> Page:
-    """Displays input boxes for recording a new basketball game"""
+    """Displays input boxes for recording a new basketball game."""
     return Page(state, [
         Header("Add a Basketball Game"),
         "Enter the opponent:",
@@ -118,7 +117,7 @@ def add_game(state: State) -> Page:
 def save_game(state: State, opponent: str, date: str,
               points: int, rebounds: int, assists: int,
               steals: int, blocks: int) -> Page:
-    """Validates the user's inputs and saves a new game to the state"""
+    """Validates the user's inputs and saves a new game."""
 
     if opponent.strip() == "" or date.strip() == "":
         return Page(state, [
@@ -137,8 +136,10 @@ def save_game(state: State, opponent: str, date: str,
             Link("Try Again", "/add_game")
         ])
 
-    new_game = Game(opponent, date, points, rebounds,
-                    assists, steals, blocks)
+    new_game = Game(
+        opponent, date, points, rebounds,
+        assists, steals, blocks
+    )
 
     new_games = state.games + [new_game]
 
@@ -263,7 +264,7 @@ def averages(state: State) -> Page:
 
 @route
 def goals(state: State) -> Page:
-    """Displays the player's current points goal and an input to change it."""
+    """Displays the player's current points goal."""
     return Page(state, [
         Header("Basketball Goals"),
         "Current Points Goal: " + str(state.points_goal),
@@ -308,7 +309,7 @@ def update_goal(state: State, new_goal: int) -> Page:
 
 @route
 def settings(state: State) -> Page:
-    """Displays the player's current name and gives an option to change it."""
+    """Displays the player's current name and allows it to be changed."""
     return Page(state, [
         Header("Settings"),
         "Current Player: " + state.athlete_name,
