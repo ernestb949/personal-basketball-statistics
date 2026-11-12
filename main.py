@@ -1,6 +1,19 @@
 from drafter import *
 from dataclasses import dataclass
 
+set_website_title("Basketball Statistics Tracker")
+
+set_site_information(
+    author="Ernest Barnes",
+    description="A website for recording basketball game statistics, tracking performance, and setting goals.",
+    sources="Created using Python and the Drafter library.",
+    planning="",
+    links=[]
+)
+
+hide_debug_information()
+set_website_framed(False)
+
 
 @dataclass
 class Game:
@@ -309,19 +322,5 @@ def update_name(state: State, new_name: str) -> Page:
         "Your player name is now " + new_name,
         Link("Home", "/")
     ])
-
-
-set_website_title("Basketball Statistics Tracker")
-
-set_site_information(
-    author="Ernest Barnes",
-    description="A website for recording basketball game statistics, tracking performance, and setting goals.",
-    sources="Created using Python and the Drafter library.",
-    planning=[],
-    links=[]
-)
-
-hide_debug_information()
-set_website_framed(False)
 
 start_server(State([], "Player", 20, -1, ""))
